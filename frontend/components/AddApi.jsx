@@ -6,20 +6,22 @@ export default function AddAPI({ fetchAPI }) {
     failed: "",
   });
 
+
   function handleChange(event) {
     setCurrUrl(event.target.value);
   }
 
   const handleSubmit = async () => {
+    
     const newAPI = {
       url: {
-        id: Math.random(),
+        id: Math.floor(Math.random() * 100) + 1,
         url: currUrl,
+        error: responsMsg.failed,
       },
     };
 
     try {
-      console.log("Sending:", JSON.stringify(newAPI));
       const response = await fetch("http://localhost:5000/apis", {
         method: "POST",
         body: JSON.stringify(newAPI),

@@ -7,7 +7,7 @@ export async function pingUrl(url) {
   } catch (error) {
     return {
       url,
-      status: error.cause,
+      status: error.code,
       message: "Offline",
     };
   }
