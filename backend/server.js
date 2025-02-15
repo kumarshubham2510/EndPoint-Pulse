@@ -17,12 +17,14 @@ let db = [
     url: "https://www.google.com",
     status: google.status,
     message: google.message,
+    lastUpdatedBy: new Date().toLocaleString(),
   },
   {
     id: 2,
     url: "https://www.yahoo.com",
     status: yahoo.status,
     message: yahoo.message,
+    lastUpdatedBy: new Date().toLocaleString(),
   },
 ];
 
@@ -58,6 +60,7 @@ app.post("/apis", async (req, res) => {
     ...getUrl.url,
     status: getPing.status ? getPing.status : "Offline",
     message: getPing.message,
+    lastUpdatedBy: new Date().toLocaleString(),
   };
   db.push(newAPI);
   res.status(200).json({ message: "URL added successfully" });
@@ -74,6 +77,7 @@ app.get("/status", async (req, res) => {
           ...api,
           status: pingResult.status,
           message: pingResult.message,
+          lastUpdatedBy: new Date().toLocaleString(),
         };
       })
     );
