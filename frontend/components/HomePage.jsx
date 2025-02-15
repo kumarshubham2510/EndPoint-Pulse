@@ -1,24 +1,13 @@
-import { useState } from "react";
+import ShowAPI from "./ShowAPI";
+import AddAPI from "./AddApi";
+import Dashboard from "./DashBoard";
 
 export default function HomePage() {
-  const [apiUrl, setApiUrl] = useState("");
-
-  function handleChange(event) {
-    setApiUrl(event.target.value);
-  }
-  function handleSubmit() {
-    console.log("API url submttted");
-  }
-
   return (
     <>
-      <input
-        name="apiurl"
-        value={apiUrl}
-        placeholder="Enter your API Url"
-        onChange={handleChange}
-      ></input>
-      <button onClick={handleSubmit}>Submit </button>
+      <h1>EndPoint Pulse</h1>
+
+      <Dashboard />
     </>
   );
 }
