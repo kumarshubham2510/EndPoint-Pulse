@@ -6,13 +6,19 @@ export default function AddAPI({ fetchAPI }) {
     failed: "",
   });
 
-
   function handleChange(event) {
     setCurrUrl(event.target.value);
   }
 
   const handleSubmit = async () => {
-    
+    if (!currUrl) {
+      setResponsMsg({
+        ...responsMsg,
+        failed: "Please add the url to submit",
+      });
+      return;
+    }
+
     const newAPI = {
       url: {
         id: Math.floor(Math.random() * 100) + 1,
@@ -51,6 +57,9 @@ export default function AddAPI({ fetchAPI }) {
       });
     }
   };
+
+  
+
   return (
     <>
       {" "}
