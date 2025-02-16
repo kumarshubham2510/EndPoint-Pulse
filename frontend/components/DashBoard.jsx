@@ -36,10 +36,14 @@ export default function Dashboard() {
     } catch (error) {
       setErrorMessage({ message: error.message });
     }
-    
   }
   useEffect(() => {
     fetchAPI();
+    const interval = setInterval(() => {
+      fetchAPI(); // Fetch new data every 5 seconds
+    }, 60000);
+
+    return () => clearInterval(interval); // Cleanup interval on unmount
   }, []);
 
   return (

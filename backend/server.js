@@ -4,31 +4,16 @@ import dotenv from "dotenv";
 import cors from "cors";
 import axios from "axios";
 import { pingUrl } from "./pingUrl.js";
+import schedulePing from "./scheduler.js";
+import { getDb, updateDb } from "./db.js";
 
 // Load environment variables
 dotenv.config();
 
-const google = await pingUrl("https://www.google.com");
-const yahoo = await pingUrl("https://www.yahoo.com");
-
-let db = [
-  {
-    id: 1,
-    url: "https://www.google.com",
-    status: google.status,
-    message: google.message,
-    lastUpdatedBy: new Date().toLocaleString(),
-  },
-  {
-    id: 2,
-    url: "https://www.yahoo.com",
-    status: yahoo.status,
-    message: yahoo.message,
-    lastUpdatedBy: new Date().toLocaleString(),
-  },
-];
+schedulePing();
 
 // Example usage
+const db = getDb();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -50,7 +35,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/apis", async (req, res) => {
-  res.status(200).json(db);
+  res.status(200).json(getDb());
 });
 
 app.post("/apis", async (req, res) => {
@@ -63,6 +48,7 @@ app.post("/apis", async (req, res) => {
     lastUpdatedBy: new Date().toLocaleString(),
   };
   db.push(newAPI);
+  updateDb(db);
   res.status(200).json({ message: "URL added successfully" });
 });
 
@@ -70,7 +56,7 @@ app.get("/status", async (req, res) => {
   try {
     console.log("Pinging All APi's again");
 
-    const updatedStatuses = await Promise.all(
+    let updatedStatuses = await Promise.all(
       db.map(async (api) => {
         const pingResult = await pingUrl(api.url);
         return {
@@ -82,10 +68,9 @@ app.get("/status", async (req, res) => {
       })
     );
 
-    db = [...updatedStatuses];
-    console.log(db);
+    updateDb(updatedStatuses);
 
-    res.status(200).json(db);
+    res.status(200).json(getDb());
   } catch (error) {
     console.error("Error updating status:", error);
     res.status(500).json({ message: "Internal Server Error" });
