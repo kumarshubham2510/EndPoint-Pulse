@@ -1,7 +1,3 @@
-Here's an example of a **README.md** file for your project:
-
----
-
 # Endpoint Pulse
 
 **Endpoint Pulse** is a web application built to monitor the status of APIs. It provides a dashboard that allows users to add APIs and continuously check and update if those APIs are up and running. The frontend is built using **React**, and the backend is powered by **Node.js**.
