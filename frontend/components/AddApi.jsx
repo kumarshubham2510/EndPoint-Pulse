@@ -1,10 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 export default function AddAPI({ fetchAPI }) {
   const [currUrl, setCurrUrl] = useState("");
   const [responsMsg, setResponsMsg] = useState({
     success: "",
     failed: "",
   });
+
+  useEffect(() => {
+    let timer;
+
+    if (responsMsg) {
+      // Only set the timer if the state is true
+      timer = setTimeout(() => {
+        setResponsMsg({
+          failed: "",
+          success: "",
+        });
+      }, 5000); // 5000 milliseconds = 5 seconds
+    }
+
+    return () => clearTimeout(timer); // Clear the timer if the component unmounts or state changes
+  }, [responsMsg]);
 
   function handleChange(event) {
     setCurrUrl(event.target.value);
@@ -58,8 +74,6 @@ export default function AddAPI({ fetchAPI }) {
     }
   };
 
-  
-
   return (
     <>
       {" "}
@@ -68,13 +82,23 @@ export default function AddAPI({ fetchAPI }) {
       ) : (
         <p>{responsMsg.success}</p>
       )}
-      <input
-        name="apiurl"
-        value={currUrl}
-        placeholder="Enter your API Url"
-        onChange={handleChange}
-      ></input>
-      <button onClick={handleSubmit}>Submit </button>
+      <div className=" flex gap-4 my-4 w-[35%]">
+        {" "}
+        <input
+          type="text"
+          className="border border-gray-300 rounded px-3 py-2 w-[80%]"
+          placeholder="Enter API URL"
+          name="apiurl"
+          value={currUrl}
+          onChange={handleChange}
+        />
+        <button
+          onClick={handleSubmit}
+          className="hover:cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded"
+        >
+          Add API
+        </button>
+      </div>
     </>
   );
 }

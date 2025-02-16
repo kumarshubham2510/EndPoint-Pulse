@@ -57,8 +57,12 @@ export default function Dashboard() {
       >
         Current Status
       </button> */}
-      <AddAPI fetchAPI={fetchAPI} />
-      <ShowAPI currentAPI={currentAPI} handleRefresh={refreshStatus} />
+      <div className="h-90% w-90% bg-gradient-to-r from-blue-100 to-blue-50 p-8">
+        <div className="bg-white/30 backdrop-blur-lg rounded-lg shadow-lg p-6">
+          <AddAPI fetchAPI={fetchAPI} />
+          <ShowAPI currentAPI={currentAPI} handleRefresh={refreshStatus} />
+        </div>
+      </div>
     </>
   );
 }
