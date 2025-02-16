@@ -51,10 +51,14 @@ export default function Dashboard() {
       {errorMessage.message && (
         <p style={{ color: "red" }}>Error occured : {errorMessage.message}</p>
       )}
-      <button onClick={refreshStatus}>Current Status</button>
+      {/* <button
+        className="bg-stone-200 rounded-md p-2 m-4 "
+        onClick={refreshStatus}
+      >
+        Current Status
+      </button> */}
       <AddAPI fetchAPI={fetchAPI} />
-      <h2>Current API's</h2>
-      <ShowAPI currentAPI={currentAPI} fetchAPI={fetchAPI} />
+      <ShowAPI currentAPI={currentAPI} handleRefresh={refreshStatus} />
     </>
   );
 }
